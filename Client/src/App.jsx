@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import "./App.css";
-import MovieList from "./components/MovieList";
-import SearchBar from "./components/SearchBar";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import './App.css';
+import MovieList from './components/MovieList';
+import SearchBar from './components/SearchBar';
+import MovieDetails from './components/MovieDetails';
 
 function App() {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [query, setQuery] = useState("");
-  const [yearFilter, setYearFilter] = useState("");
+  const [query, setQuery] = useState('raja');
+  const [yearFilter, setYearFilter] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
   const searchMovies = (query, yearFilter, page = 1) => {
@@ -40,18 +41,26 @@ function App() {
 
   return (
     <>
-      <SearchBar onSearch={(q, year) => { setQuery(q); setYearFilter(year); setCurrentPage(1); }} />
+      <SearchBar
+        onSearch={(q, year) => {
+          setQuery(q);
+          setYearFilter(year);
+          setCurrentPage(1);
+        }}
+      />
       {isLoading ? (
         <div>Loading...</div>
       ) : error ? (
         <div>Error: {error}</div>
       ) : (
-        <MovieList
-          movies={movies}
-          currentPage={currentPage}
-          onPageChange={(page) => setCurrentPage(page)}
-          query={query}
-        />
+        <>
+          <MovieList
+            movies={movies}
+            currentPage={currentPage}
+            onPageChange={(page) => setCurrentPage(page)}
+          />
+       
+        </>
       )}
     </>
   );

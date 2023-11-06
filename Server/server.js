@@ -19,8 +19,8 @@ app.get('/api/search', async (req, res) => {
 
 app.get('/api/filter', async (req, res) => {
   try {
-    const { name, year, title } = req.query;
-    const response = await axios.get(`http://www.omdbapi.com/?s=${title}&y=${year}&t=${name}&apikey=${process.env.API_KEY}`);
+    const { year } = req.query;
+    const response = await axios.get(`http://www.omdbapi.com/?y=${year}&s=movie&apikey=${process.env.API_KEY}`);
     res.json(response.data);
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
