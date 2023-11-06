@@ -15,7 +15,10 @@
   background: white;
   border-radius: 5px;
   padding: 20px;
+  width: 30%;
+  height: 400px;
   position: relative;
+  line-height: 20px;
 }
 
 .close-button {
@@ -31,7 +34,13 @@
   margin-bottom: 10px;
 }
 
+.modal-content h2,p{
+  color: black;
+}
+
 .modal-content img {
-  max-width: 100%;
-  margin-top: 10px;
+  width: 80%;
+  height: 70%;
+  margin-top: -1%;
+  border-radius: 5px;
 }

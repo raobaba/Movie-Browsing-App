@@ -40,7 +40,7 @@ const MovieList = ({ movies, currentPage, onPageChange }) => {
           Prev
         </button>
         <span>{currentPage}</span>
-        <button onClick={() => handlePageChange(currentPage + 1)}>Next</button>
+        <button disabled={movies.length<10} onClick={() => handlePageChange(currentPage + 1)}>Next</button>
       </div>
       <MovieDetails isOpen={isModalOpen} onClose={() => setModalOpen(false)} movie={selectedMovie} />
     </>

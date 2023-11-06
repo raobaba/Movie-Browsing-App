@@ -1,13 +1,15 @@
+// SearchBar.js
 import React, { useState } from "react";
 import "../styles/SearchBar.css";
 
 const SearchBar = ({ onSearch }) => {
   const [query, setQuery] = useState("");
-  const [yearFilter, setYearFilter] = useState("");
+  const [yearFilter, setYearFilter] = useState(""); // Updated year filter
 
   const handleSearch = () => {
     onSearch(query, yearFilter);
   };
+
   return (
     <div className="search-bar">
       <input
@@ -23,13 +25,13 @@ const SearchBar = ({ onSearch }) => {
         onChange={(e) => setYearFilter(e.target.value)}
       >
         <option value="">All Years</option>
-        <option value="1900-1920">1900-1920</option>
-        <option value="1920-1940">1920-1940</option>
-        <option value="1940-1960">1940-1960</option>
-        <option value="1960-1980">1960-1980</option>
-        <option value="1980-2000">1980-2000</option>
-        <option value="2000-2020">2000-2020</option>
-        <option value="2020-2040">2020-2040</option>
+        <option value="1900-1919">1900-1919</option>
+        <option value="1920-1939">1920-1939</option>
+        <option value="1940-1959">1940-1959</option>
+        <option value="1960-1979">1960-1979</option>
+        <option value="1980-1999">1980-1999</option>
+        <option value="2000-2019">2000-2019</option>
+        <option value="2020-2039">2020-2039</option>
       </select>
       <button className="search-button" onClick={handleSearch}>
         Search

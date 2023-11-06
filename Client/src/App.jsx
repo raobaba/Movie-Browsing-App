@@ -3,7 +3,6 @@ import axios from 'axios';
 import './App.css';
 import MovieList from './components/MovieList';
 import SearchBar from './components/SearchBar';
-import MovieDetails from './components/MovieDetails';
 
 function App() {
   const [movies, setMovies] = useState([]);
@@ -18,10 +17,6 @@ function App() {
     setError(null);
 
     let apiUrl = `http://localhost:8000/api/search?query=${query}&page=${page}`;
-
-    if (yearFilter) {
-      apiUrl += `&year=${yearFilter}`;
-    }
 
     axios
       .get(apiUrl)
@@ -59,7 +54,6 @@ function App() {
             currentPage={currentPage}
             onPageChange={(page) => setCurrentPage(page)}
           />
-       
         </>
       )}
     </>
