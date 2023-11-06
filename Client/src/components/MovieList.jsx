@@ -1,36 +1,19 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
 import "../styles/MovieList.css";
 
-const MovieList = () => {
-  const [movies, setMovies] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+const MovieList = ({ movies, currentPage, onPageChange }) => {
+  const displayMovies = movies || [];
 
-  useEffect(() => {
-    axios
-      .get(`http://localhost:8000/api/search?s=kabhi`) // Make sure your API server is running and the endpoint is correct
-      .then((response) => {
-        setMovies(response.data.Search);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        setError(err.message);
-        setIsLoading(false);
-      });
-  }, []);
+  const maxResultsPerPage = 10;
+  const totalPages = Math.ceil(displayMovies.length / maxResultsPerPage);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+  const handlePageChange = (page) => {
+    onPageChange(page);
+  };
 
   return (
     <div className="movie-list">
-      {movies.map((movie) => (
+      {displayMovies.map((movie) => (
         <div key={movie.imdbID} className="movie-card">
           {movie.Poster ? (
             <img src={movie.Poster} alt={movie.Title} />
@@ -44,6 +27,15 @@ const MovieList = () => {
           </div>
         </div>
       ))}
+      <div className="pagination">
+        {currentPage > 1 && (
+          <button onClick={() => handlePageChange(currentPage - 1)}>Previous</button>
+        )}
+        <span>Page {currentPage}</span>
+        {currentPage < totalPages && (
+          <button onClick={() => handlePageChange(currentPage + 1)}>Next</button>
+        )}
+      </div>
     </div>
   );
 };

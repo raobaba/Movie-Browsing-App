@@ -1,5 +1,4 @@
 const express = require('express');
-const path = require('path');
 const axios = require('axios');
 const cors = require("cors");
 require("dotenv").config();
@@ -7,19 +6,25 @@ const app = express();
 app.use(cors());
 
 const port = process.env.PORT || 8000;
-app.use(express.static(path.join(__dirname, '../client/build')));
 app.get('/api/search', async (req, res) => {
-  const { query } = req.query;
+  const { query,page } = req.query; // Change this line to use req.query
+  console.log(query);
   try {
-    const response = await axios.get(`http://www.omdbapi.com/?s=${query}&apikey=${process.env.API_KEY}`);
+    const response = await axios.get(`http://www.omdbapi.com/?s=${query}&apikey=${process.env.API_KEY}&page=${page}`);
     res.json(response.data);
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/build/index.html'));
+app.get('/api/filter', async (req, res) => {
+  try {
+    const { name, year, title } = req.query;
+    const response = await axios.get(`http://www.omdbapi.com/?s=${title}&y=${year}&t=${name}&apikey=${process.env.API_KEY}`);
+    res.json(response.data);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
 
 app.listen(port, () => {
